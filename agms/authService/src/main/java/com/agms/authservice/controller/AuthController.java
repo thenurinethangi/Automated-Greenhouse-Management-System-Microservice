@@ -1,0 +1,38 @@
+package com.agms.authservice.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.agms.authservice.dto.UserDTO;
+import com.agms.authservice.dto.UserRoleDTO;
+import com.agms.authservice.service.AuthService;
+import com.agms.authservice.util.APIResponse;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/auth/")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/register")
+    public APIResponse register(@RequestBody UserDTO user) {
+        return authService.register(user);
+    }
+
+    @PostMapping("/login")
+    public APIResponse login(@RequestBody UserDTO user) {
+        return authService.login(user);
+    }
+
+    @PostMapping("/access-token")
+    public APIResponse generateNewAccessToken(@RequestBody UserRoleDTO user) {
+        return authService.generateNewAccessToken(user);
+    }
+
+}
