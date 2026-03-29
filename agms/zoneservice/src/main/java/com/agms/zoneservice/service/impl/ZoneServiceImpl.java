@@ -25,8 +25,9 @@ public class ZoneServiceImpl implements ZoneService {
     private final IoTDeviceService deviceService;
 
     public APIResponse createZone(ZoneDTO zoneDTO) {
-        if (zoneDTO.getMinTemp() > zoneDTO.getMaxTemp()) {
-            throw new IllegalArgumentException("minTemp must be less than or equal to maxTemp");
+        
+        if (zoneDTO.getMinTemp() >= zoneDTO.getMaxTemp()) {
+            throw new IllegalArgumentException("minTemp must be smaller than maxTemp");
         }
 
         Map<String, String> response = deviceService.registerDevice("Sensor-1", zoneDTO.getZoneName());
@@ -54,8 +55,8 @@ public class ZoneServiceImpl implements ZoneService {
         if (zone == null) {
             return new APIResponse(404, "zone not found", null);
         }
-        if (zoneDTO.getMinTemp() > zoneDTO.getMaxTemp()) {
-            throw new IllegalArgumentException("minTemp must be less than or equal to maxTemp");
+        if (zoneDTO.getMinTemp() >= zoneDTO.getMaxTemp()) {
+            throw new IllegalArgumentException("minTemp must be smaller than maxTemp");
         }
 
         zone.setMinTemp(zoneDTO.getMinTemp());
