@@ -1,5 +1,6 @@
 package com.agms.zoneservice.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class ZoneServiceImpl implements ZoneService {
     private final IoTDeviceService deviceService;
 
     public APIResponse createZone(ZoneDTO zoneDTO) {
-        
+
         if (zoneDTO.getMinTemp() >= zoneDTO.getMaxTemp()) {
             throw new IllegalArgumentException("minTemp must be smaller than maxTemp");
         }
@@ -38,6 +39,12 @@ public class ZoneServiceImpl implements ZoneService {
         Zone savedZone = zoneRepository.save(zone);
 
         return new APIResponse(200, "successfully create a new zone", savedZone);
+    }
+
+    public APIResponse getAllZones() {
+
+        List<Zone> zones = zoneRepository.findAll();
+        return new APIResponse(200, "successfully retrieved all zones", zones);
     }
 
     public APIResponse getZoneById(Long id) {

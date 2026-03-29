@@ -30,6 +30,12 @@ public class ZoneController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
+    @GetMapping
+    public ResponseEntity<APIResponse> getAllZones() {
+        APIResponse response = zoneService.getAllZones();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<APIResponse> getZoneById(@PathVariable Long id) {
         APIResponse response = zoneService.getZoneById(id);
