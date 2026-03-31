@@ -1,6 +1,5 @@
-package com.agms.telemetryservice.service.impl;
+package com.agms.automationservice.service.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,32 +7,27 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.agms.telemetryservice.service.IoTAuthService;
-import com.agms.telemetryservice.service.ZoneService;
+import com.agms.automationservice.service.ZoneService;
 
 @Service
 public class ZoneServiceImpl implements ZoneService {
 
     private final WebClient webClient;
-    private final IoTAuthService authService;
 
-    public ZoneServiceImpl(WebClient.Builder builder, IoTAuthService authService,
+    public ZoneServiceImpl(WebClient.Builder builder,
             @Value("${zone.service.base-url}") String zoneServiceBaseUrl) {
         this.webClient = builder.baseUrl(zoneServiceBaseUrl).build();
-        this.authService = authService;
     }
 
-    @Override
-    public List<Map<String, Object>> getAllZones() {
+    public Map<String, Object> getZoneData(String zoneId) {
 
-        List<Map<String, Object>> response = webClient.get()
-                .uri("/api/zones")
+        Map<String, Object> response = webClient.get()
+                .uri("/api/zones/" + zoneId)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Map<String, Object>>>() {
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
                 })
                 .block();
 
         return response;
     }
-
 }

@@ -23,6 +23,7 @@ public class TelemetryServiceImpl implements TelemetryService {
     private final IoTDeviceService deviceService;
     private final ZoneServiceImpl zoneService;
     private final TelemetryRepository telemetryRepository;
+    private final AutomationServiceImpl automationService;
 
     @Override
     public APIResponse fetchLatest() {
@@ -33,10 +34,17 @@ public class TelemetryServiceImpl implements TelemetryService {
             String deviceId = map.get("deviceId").toString();
             Map<String, String> telemetry = deviceService.getDeviceTelemetry(deviceId);
 
-                telemetryRepository.save(new Telemetry(
+            Telemetry savedTelemetry = telemetryRepository.save(new Telemetry(
                     deviceId,
                     Double.parseDouble(telemetry.get("temperature")),
                     Double.parseDouble(telemetry.get("humidity"))));
+
+            Map<String, Object> data = Map.of(
+                    "zoneId", map.get("zoneId"),
+                    "temperature", savedTelemetry.getTemperature(),
+                    "humidity", savedTelemetry.getHumidity());
+            automationService.callAutomationServiceToApplyLogic(data);
+
         }
 
         return null;
