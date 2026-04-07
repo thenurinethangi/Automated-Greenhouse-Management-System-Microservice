@@ -23,13 +23,14 @@ public class AutomationServiceImpl implements AutomationService {
     }
 
     @Override
-    public String callAutomationServiceToApplyLogic(Map<String, Object> data) {
+    public Map<String, Object> callAutomationServiceToApplyLogic(Map<String, Object> data) {
 
-        String response = webClient.post()
+        Map<String, Object> response = webClient.post()
                 .uri("/api/automation/process")
+                .bodyValue(data)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-            })
+                })
                 .block();
 
         return response;
