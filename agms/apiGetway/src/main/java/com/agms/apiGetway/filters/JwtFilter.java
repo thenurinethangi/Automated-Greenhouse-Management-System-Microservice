@@ -1,50 +1,58 @@
 package com.agms.apiGetway.filters;
 
 import com.agms.apiGetway.utils.JwtUtil;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.NonNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter {
+public class JwtFilter implements WebFilter {
 
     private final JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain) throws ServletException, IOException {
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 
-        String path = request.getServletPath();
+        String path = exchange.getRequest().getURI().getPath();
+
+        // ✅ Skip auth endpoints
         if (path.startsWith("/api/auth/")) {
-            filterChain.doFilter(request, response);
-            return;
+            return chain.filter(exchange);
         }
 
-        String authHeader = request.getHeader("Authorization");
+        String authHeader = exchange.getRequest()
+                .getHeaders()
+                .getFirst("Authorization");
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new ServletException("Missing or invalid JWT token");
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
         }
 
         String token = authHeader.substring(7);
 
-        if (!jwtUtil.validateAccessToken(token)) {
-            throw new ServletException("Invalid JWT token");
+        try {
+            if (!jwtUtil.validateAccessToken(token)) {
+                throw new RuntimeException("Invalid token");
+            }
+
+            String email = jwtUtil.extractEmail(token);
+            String role = jwtUtil.extractRole(token);
+
+            // ✅ Store in request attributes (WebFlux way)
+            exchange.getAttributes().put("email", email);
+            exchange.getAttributes().put("role", role);
+
+        } catch (Exception e) {
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
         }
 
-        String email = jwtUtil.extractEmail(token);
-        String role = jwtUtil.extractRole(token);
-
-        request.setAttribute("email", email);
-        request.setAttribute("role", role);
-
-        filterChain.doFilter(request, response);
+        return chain.filter(exchange);
     }
 }
