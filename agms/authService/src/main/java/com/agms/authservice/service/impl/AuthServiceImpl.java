@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.agms.authservice.dto.UserDTO;
-import com.agms.authservice.dto.UserRoleDTO;
+import com.agms.authservice.dto.RefreshToken;
 import com.agms.authservice.entity.User;
 import com.agms.authservice.exception.EmailAlreadyExistsException;
 import com.agms.authservice.exception.EmailNotExistsException;
@@ -70,11 +70,24 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public APIResponse generateNewAccessToken(UserRoleDTO user) {
+    public APIResponse generateNewAccessToken(RefreshToken token) {
 
-    String newAccessToken = jwtUtil.generateAccessToken(user.getEmail(), user.getRole());
+        if (!jwtUtil.validateRefreshToken(token.getRefreshToken())) {
+            return new APIResponse(401, "Unauthenticated, please login!", null);
+        }
+
+        String email = jwtUtil.extractEmailFromRefreshToken(token.getRefreshToken());
+
+        User user = authRepository.findByEmail(email);
+
+        if (user == null) {
+            throw new EmailNotExistsException("Email not exists, please register first");
+        }
+
+        String newAccessToken = jwtUtil.generateAccessToken(user.getEmail(), user.getRole());
         LinkedHashMap<String, Object> responseData = new LinkedHashMap<>();
         responseData.put("accessToken", newAccessToken);
+
         return new APIResponse(200, "New access token generated", responseData);
     }
 

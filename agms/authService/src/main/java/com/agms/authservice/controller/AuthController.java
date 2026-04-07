@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agms.authservice.dto.UserDTO;
-import com.agms.authservice.dto.UserRoleDTO;
+import com.agms.authservice.dto.RefreshToken;
 import com.agms.authservice.service.AuthService;
 import com.agms.authservice.util.APIResponse;
 
@@ -31,8 +31,8 @@ public class AuthController {
     }
 
     @PostMapping("/access-token")
-    public APIResponse generateNewAccessToken(@RequestBody UserRoleDTO user) {
-        return authService.generateNewAccessToken(user);
+    public APIResponse generateNewAccessToken(@RequestBody RefreshToken token) {
+        return authService.generateNewAccessToken(token);
     }
 
 }

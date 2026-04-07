@@ -20,7 +20,6 @@ public class JwtFilter implements WebFilter {
 
         String path = exchange.getRequest().getURI().getPath();
 
-        // ✅ Skip auth endpoints
         if (path.startsWith("/api/auth/")) {
             return chain.filter(exchange);
         }
@@ -44,7 +43,6 @@ public class JwtFilter implements WebFilter {
             String email = jwtUtil.extractEmail(token);
             String role = jwtUtil.extractRole(token);
 
-            // ✅ Store in request attributes (WebFlux way)
             exchange.getAttributes().put("email", email);
             exchange.getAttributes().put("role", role);
 
