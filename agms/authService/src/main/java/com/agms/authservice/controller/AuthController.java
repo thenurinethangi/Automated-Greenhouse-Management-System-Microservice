@@ -1,5 +1,7 @@
 package com.agms.authservice.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,17 +23,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public APIResponse register(@RequestBody UserDTO user) {
+    public APIResponse register(@Valid @RequestBody UserDTO user) {
         return authService.register(user);
     }
 
     @PostMapping("/login")
-    public APIResponse login(@RequestBody UserDTO user) {
+    public APIResponse login(@Valid @RequestBody UserDTO user) {
         return authService.login(user);
     }
 
     @PostMapping("/access-token")
-    public APIResponse generateNewAccessToken(@RequestBody RefreshToken token) {
+    public APIResponse generateNewAccessToken(@Valid @RequestBody RefreshToken token) {
         return authService.generateNewAccessToken(token);
     }
 

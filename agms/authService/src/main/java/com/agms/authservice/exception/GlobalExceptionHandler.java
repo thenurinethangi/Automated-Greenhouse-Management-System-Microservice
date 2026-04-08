@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,27 @@ import com.agms.authservice.util.APIResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<APIResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, Object> errorDetails = baseErrorDetails("Validation failed");
+        Map<String, String> fieldErrors = new LinkedHashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error -> fieldErrors.put(error.getField(), error.getDefaultMessage()));
+        errorDetails.put("errors", fieldErrors);
+
+        APIResponse response = new APIResponse(400, "Validation error", errorDetails);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(UnauthenticateException.class)
+    public ResponseEntity<APIResponse> handleUnauthenticateException(UnauthenticateException ex) {
+        Map<String, Object> errorDetails = baseErrorDetails("Unauthenticated access");
+        errorDetails.put("error", ex.getMessage());
+
+        APIResponse response = new APIResponse(401, "Unauthenticated access", errorDetails);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<APIResponse> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {

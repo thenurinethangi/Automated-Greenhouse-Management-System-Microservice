@@ -12,6 +12,7 @@ import com.agms.authservice.entity.User;
 import com.agms.authservice.exception.EmailAlreadyExistsException;
 import com.agms.authservice.exception.EmailNotExistsException;
 import com.agms.authservice.exception.PasswordIncorrectException;
+import com.agms.authservice.exception.UnauthenticateException;
 import com.agms.authservice.service.AuthService;
 import com.agms.authservice.util.APIResponse;
 import com.agms.authservice.util.JwtUtil;
@@ -73,15 +74,14 @@ public class AuthServiceImpl implements AuthService {
     public APIResponse generateNewAccessToken(RefreshToken token) {
 
         if (!jwtUtil.validateRefreshToken(token.getRefreshToken())) {
-            return new APIResponse(401, "Unauthenticated, please login!", null);
+            throw new UnauthenticateException("Invalid refresh token, please login again!");
         }
 
         String email = jwtUtil.extractEmailFromRefreshToken(token.getRefreshToken());
 
         User user = authRepository.findByEmail(email);
-
         if (user == null) {
-            throw new EmailNotExistsException("Email not exists, please register first");
+            throw new EmailNotExistsException("User not exists, please register first!");
         }
 
         String newAccessToken = jwtUtil.generateAccessToken(user.getEmail(), user.getRole());
