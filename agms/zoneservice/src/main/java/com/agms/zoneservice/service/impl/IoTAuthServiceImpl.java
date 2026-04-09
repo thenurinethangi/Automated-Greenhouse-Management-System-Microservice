@@ -1,12 +1,10 @@
 package com.agms.zoneservice.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
+import com.agms.zoneservice.dto.UserDTO;
+import com.agms.zoneservice.feign.IoTAuthInterface;
 import com.agms.zoneservice.service.IoTAuthService;
 
 @Service
@@ -21,10 +19,10 @@ public class IoTAuthServiceImpl implements IoTAuthService {
     @Value("${iot.password}")
     private String password;
 
-    private final WebClient webClient;
+    private final IoTAuthInterface authInterface;
 
-    public IoTAuthServiceImpl(WebClient.Builder builder, @Value("${iot.base-url}") String iotBaseUrl) {
-        this.webClient = builder.baseUrl(iotBaseUrl).build();
+    public IoTAuthServiceImpl(IoTAuthInterface authInterface) {
+        this.authInterface = authInterface;
     }
 
     @Override
@@ -42,39 +40,25 @@ public class IoTAuthServiceImpl implements IoTAuthService {
             return accessToken;
         }
 
-        Map<String, String> request = new HashMap<>();
-        request.put("refreshToken", refreshToken);
+        UserDTO request = new UserDTO();
+        request.setRefreshToken(refreshToken);
 
-        Map response = webClient.post()
-                .uri("/auth/refresh")
-                .bodyValue(request)
-                .retrieve()
-                .bodyToMono(Map.class)
-                .block();
+        UserDTO response = authInterface.refresh(request);
 
-        this.accessToken = (String) response.get("accessToken");
-
-        Object newRefreshToken = response.get("refreshToken");
-        if (newRefreshToken instanceof String) {
-            this.refreshToken = (String) newRefreshToken;
-        }
+        this.accessToken = response.getAccessToken();
+        this.refreshToken = response.getRefreshToken();
 
         return this.accessToken;
     }
 
     private void login() {
-        Map<String, String> request = new HashMap<>();
-        request.put("username", username);
-        request.put("password", password);
+        UserDTO request = new UserDTO();
+        request.setUsername(username);
+        request.setPassword(password);
 
-        Map response = webClient.post()
-                .uri("/auth/login")
-                .bodyValue(request)
-                .retrieve()
-                .bodyToMono(Map.class)
-                .block();
+        UserDTO response = authInterface.login(request);
 
-        this.accessToken = (String) response.get("accessToken");
-        this.refreshToken = (String) response.get("refreshToken");
+        this.accessToken = response.getAccessToken();
+        this.refreshToken = response.getRefreshToken();
     }
 }

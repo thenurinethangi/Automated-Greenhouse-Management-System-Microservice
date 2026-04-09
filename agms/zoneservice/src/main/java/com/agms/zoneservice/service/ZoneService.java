@@ -5,14 +5,14 @@ import com.agms.zoneservice.util.APIResponse;
 
 public interface ZoneService {
 
-    public APIResponse createZone(ZoneDTO zoneDTO);
-    
-    public APIResponse getAllZones();
-    
-    public APIResponse getZoneById(Long id);
+    public APIResponse createZone(ZoneDTO zoneDTO, String email);
 
-    public APIResponse updateThresholdsById(Long id, ZoneDTO zoneDTO);
+    public APIResponse getAllZones(String email);
 
-    public APIResponse deleteZoneById(Long id);
+    public APIResponse getZoneById(Long id, String email);
+
+    public APIResponse updateThresholdsById(Long id, ZoneDTO zoneDTO, String email);
+
+    public APIResponse deleteZoneById(Long id, String email);
 
 }

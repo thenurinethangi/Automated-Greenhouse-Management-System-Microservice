@@ -33,10 +33,14 @@ public class Zone {
     @Column(nullable = false)
     private String deviceId;
 
-    public Zone(String zoneName, double minTemp, double maxTemp, String deviceId) {
+    @Column(nullable = false)
+    private String userEmail;
+
+    public Zone(String zoneName, double minTemp, double maxTemp, String deviceId, String userEmail) {
         this.zoneName = zoneName;
         this.minTemp = minTemp;
         this.maxTemp = maxTemp;
         this.deviceId = deviceId;
+        this.userEmail = userEmail;
     }
 }
