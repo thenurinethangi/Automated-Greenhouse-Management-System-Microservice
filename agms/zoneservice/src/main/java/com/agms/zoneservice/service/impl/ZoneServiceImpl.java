@@ -27,6 +27,8 @@ public class ZoneServiceImpl implements ZoneService {
 
     public APIResponse createZone(ZoneDTO zoneDTO, String email) {
 
+        System.out.println("Received createZone request with zoneDTO: " + zoneDTO + " and email: " + email);
+
         if (zoneDTO.getMinTemp() >= zoneDTO.getMaxTemp()) {
             throw new IllegalArgumentException("minTemp must be smaller than maxTemp");
         }

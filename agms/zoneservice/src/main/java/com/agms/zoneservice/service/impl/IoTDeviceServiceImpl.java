@@ -38,7 +38,8 @@ public class IoTDeviceServiceImpl implements IoTDeviceService {
     }
 
     private Map<String, String> callRegisterDevice(DeviceDTO request) {
-        DeviceDTO savedDevice = deviceInterface.saveDevice(request);
+        String token = authService.getAccessToken();
+        DeviceDTO savedDevice = deviceInterface.saveDevice("Bearer " + token, request);
         Map<String, String> response = new HashMap<>();
         response.put("deviceId", savedDevice.getDeviceId());
         return response;

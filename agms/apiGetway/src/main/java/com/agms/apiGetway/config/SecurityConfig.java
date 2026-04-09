@@ -5,6 +5,8 @@ import com.agms.apiGetway.filters.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 // import org.springframework.web.cors.CorsConfiguration;
 // import org.springframework.web.cors.CorsConfigurationSource;
 // import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -15,10 +17,11 @@ import org.springframework.http.HttpStatus;
 // import java.util.List;
 
 @Configuration
+@EnableWebFluxSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-        // private final JwtFilter jwtAuthFilter;
+        private final JwtFilter jwtFilter;
         // private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
         @Bean
@@ -29,6 +32,7 @@ public class SecurityConfig {
                                 .authorizeExchange(exchange -> exchange
                                                 .pathMatchers("/api/auth/**").permitAll()
                                                 .anyExchange().authenticated())
+                                .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                                 .exceptionHandling(ex -> ex
                                                 .authenticationEntryPoint((exchange, ex2) -> {
                                                         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

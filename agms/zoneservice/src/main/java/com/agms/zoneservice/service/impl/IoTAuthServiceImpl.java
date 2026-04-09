@@ -1,5 +1,7 @@
 package com.agms.zoneservice.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,8 @@ import com.agms.zoneservice.service.IoTAuthService;
 
 @Service
 public class IoTAuthServiceImpl implements IoTAuthService {
+
+    private static final Logger log = LoggerFactory.getLogger(IoTAuthServiceImpl.class);
 
     private String accessToken;
     private String refreshToken;
@@ -56,9 +60,11 @@ public class IoTAuthServiceImpl implements IoTAuthService {
         request.setUsername(username);
         request.setPassword(password);
 
+        log.info("Logging in to IoT service with username: {}", username);
         UserDTO response = authInterface.login(request);
 
         this.accessToken = response.getAccessToken();
         this.refreshToken = response.getRefreshToken();
+        log.info("Successfully logged in to IoT service and obtained tokens.");
     }
 }
