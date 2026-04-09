@@ -38,12 +38,16 @@ public class Crop {
     private CropStatus status;
 
     @Column(nullable = false)
+    private String userEmail;
+
+    @Column(nullable = false)
     private Date createdAt;
 
-    public Crop(String cropName, Long quantity, CropStatus status, Date createdAt) {
+    public Crop(String cropName, Long quantity, CropStatus status, String userEmail, Date createdAt) {
         this.cropName = cropName;
         this.quantity = quantity;
         this.status = status;
+        this.userEmail = userEmail;
         this.createdAt = createdAt;
     }
 }

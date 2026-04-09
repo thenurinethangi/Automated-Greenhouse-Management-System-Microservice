@@ -29,11 +29,12 @@ public class CropServiceImpl implements CropService {
     private final CropRepository cropRepository;
 
     @Override
-    public APIResponse registerNewBatch(CropSaveDTO cropSaveDTO) {
+    public APIResponse registerNewBatch(CropSaveDTO cropSaveDTO, String email) {
         logger.info("Registering new crop batch with name: {} and quantity: {}", cropSaveDTO.getCropName(),
                 cropSaveDTO.getQuantity());
 
-        Crop crop = new Crop(cropSaveDTO.getCropName(), cropSaveDTO.getQuantity(), CropStatus.SEEDLING, new Date());
+        Crop crop = new Crop(cropSaveDTO.getCropName(), cropSaveDTO.getQuantity(), CropStatus.SEEDLING, email,
+                new Date());
         Crop savedCrop = cropRepository.save(crop);
 
         logger.info("Crop batch registered successfully with ID: {}", savedCrop.getId());
@@ -41,7 +42,7 @@ public class CropServiceImpl implements CropService {
     }
 
     @Override
-    public APIResponse updateCropStatus(long id, CropStatusDTO cropStatusDTO) {
+    public APIResponse updateCropStatus(long id, CropStatusDTO cropStatusDTO, String email) {
         logger.info("Updating crop status for ID: {} to {}", id, cropStatusDTO.getStatus());
 
         Crop crop = cropRepository.findById(id)
@@ -49,6 +50,13 @@ public class CropServiceImpl implements CropService {
                     logger.error("Crop batch not found with ID: {}", id);
                     return new ResourceNotFoundException("Crop batch not found with id: " + id);
                 });
+
+        if (crop.getUserEmail() != null && !crop.getUserEmail().equals(email)) {
+            String message = "Unauthorized: You do not have permission to update this crop batch";
+            logger.warn(message);
+            return new APIResponse(403, message, null);
+
+        }
 
         if (!isValidStateTransition(crop.getStatus(), cropStatusDTO.getStatus())) {
             String message = "Invalid state transition from " + crop.getStatus() + " to " + cropStatusDTO.getStatus();
@@ -65,10 +73,10 @@ public class CropServiceImpl implements CropService {
 
     @Override
     @Transactional(readOnly = true)
-    public APIResponse viewCurrentInventory() {
+    public APIResponse viewCurrentInventory(String email) {
         logger.info("Fetching current crop inventory");
 
-        List<CropDTO> list = cropRepository.findAll().stream()
+        List<CropDTO> list = cropRepository.findAllByUserEmail(email).stream()
                 .map(crop -> new CropDTO(crop.getId(), crop.getCropName(), crop.getQuantity(), crop.getStatus(),
                         crop.getCreatedAt()))
                 .toList();

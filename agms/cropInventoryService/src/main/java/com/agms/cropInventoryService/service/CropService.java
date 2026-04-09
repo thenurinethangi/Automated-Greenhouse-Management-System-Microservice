@@ -6,9 +6,9 @@ import com.agms.cropInventoryService.util.APIResponse;
 
 public interface CropService {
 
-    public APIResponse registerNewBatch(CropSaveDTO cropSaveDTO);
+    public APIResponse registerNewBatch(CropSaveDTO cropSaveDTO, String email);
 
-    public APIResponse updateCropStatus(long id, CropStatusDTO cropStatusDTO);
+    public APIResponse updateCropStatus(long id, CropStatusDTO cropStatusDTO, String email);
 
-    public APIResponse viewCurrentInventory();
+    public APIResponse viewCurrentInventory(String email);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,23 +30,23 @@ public class CropController {
     private final CropService cropService;
 
     @PostMapping
-    public ResponseEntity<APIResponse> registerNewBatch(@Valid @RequestBody CropSaveDTO cropSaveDTO) {
+    public ResponseEntity<APIResponse> registerNewBatch(@Valid @RequestBody CropSaveDTO cropSaveDTO, @RequestHeader("User-Email") String email) {
         logger.info("Registering new crop batch: {}", cropSaveDTO.getCropName());
-        APIResponse response = cropService.registerNewBatch(cropSaveDTO);
+        APIResponse response = cropService.registerNewBatch(cropSaveDTO, email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<APIResponse> updateCropStatus(@PathVariable long id, @Valid @RequestBody CropStatusDTO cropStatusDTO) {
+    public ResponseEntity<APIResponse> updateCropStatus(@PathVariable long id, @Valid @RequestBody CropStatusDTO cropStatusDTO, @RequestHeader("User-Email") String email) {
         logger.info("Updating crop status for ID: {} to {}", id, cropStatusDTO.getStatus());
-        APIResponse response = cropService.updateCropStatus(id, cropStatusDTO);
+        APIResponse response = cropService.updateCropStatus(id, cropStatusDTO, email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<APIResponse> viewCurrentInventory() {
+    public ResponseEntity<APIResponse> viewCurrentInventory(@RequestHeader("User-Email") String email) {
         logger.info("Fetching current crop inventory");
-        APIResponse response = cropService.viewCurrentInventory();
+        APIResponse response = cropService.viewCurrentInventory(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
