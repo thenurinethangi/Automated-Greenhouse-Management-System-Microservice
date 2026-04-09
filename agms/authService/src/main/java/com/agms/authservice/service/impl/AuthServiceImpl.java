@@ -6,8 +6,9 @@ import java.util.LinkedHashMap;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.agms.authservice.dto.UserDTO;
+import com.agms.authservice.dto.UserRegisterDTO;
 import com.agms.authservice.dto.RefreshToken;
+import com.agms.authservice.dto.UserLoginDTO;
 import com.agms.authservice.entity.User;
 import com.agms.authservice.exception.EmailAlreadyExistsException;
 import com.agms.authservice.exception.EmailNotExistsException;
@@ -31,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtUtil;
 
     @Override
-    public APIResponse register(UserDTO userDto) {
+    public APIResponse register(UserRegisterDTO userDto) {
 
         if (authRepository.existsByEmail(userDto.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists");
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public APIResponse login(UserDTO userDto) {
+    public APIResponse login(UserLoginDTO userDto) {
 
         if (!authRepository.existsByEmail(userDto.getEmail())) {
             throw new EmailNotExistsException("Email not exists, please register first");

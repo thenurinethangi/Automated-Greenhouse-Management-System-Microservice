@@ -31,7 +31,7 @@ public class ZoneServiceImpl implements ZoneService {
             throw new IllegalArgumentException("minTemp must be smaller than maxTemp");
         }
 
-        Map<String, String> response = deviceService.registerDevice("Sensor-1", zoneDTO.getZoneName());
+        Map<String, String> response = deviceService.registerDevice(zoneDTO.getZoneName() + "Sensor", zoneDTO.getZoneName());
         log.info("IoT device registration response received for zoneName={}", zoneDTO.getZoneName());
 
         Zone zone = new Zone(zoneDTO.getZoneName(), zoneDTO.getMinTemp(), zoneDTO.getMaxTemp(),

@@ -36,19 +36,19 @@ public class ZoneController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<APIResponse> getZoneById(@PathVariable Long id) {
         APIResponse response = zoneService.getZoneById(id);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<APIResponse> updateThresholdsById(@PathVariable Long id, @RequestBody ZoneDTO zoneDTO) {
         APIResponse response = zoneService.updateThresholdsById(id, zoneDTO);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<APIResponse> deleteZoneById(@PathVariable Long id) {
         APIResponse response = zoneService.deleteZoneById(id);
         return ResponseEntity.status(response.getStatus()).body(response);
