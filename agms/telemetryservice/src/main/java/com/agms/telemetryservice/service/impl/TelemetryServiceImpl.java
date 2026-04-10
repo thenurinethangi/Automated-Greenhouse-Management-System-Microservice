@@ -36,49 +36,96 @@ public class TelemetryServiceImpl implements TelemetryService {
 
     @Override
     public APIResponse fetchLatest(String email) {
+        try {
+            var response = zoneInterface.getZoneByUserEmail(email);
+            if (response == null || response.getBody() == null) {
+                return new APIResponse(400, "Failed to fetch zones", new ArrayList<>());
+            }
+            
+            List<Map<String, Object>> allZones = (List<Map<String, Object>>) response.getBody()
+                    .getData();
 
-        List<Map<String, Object>> allZones = (List<Map<String, Object>>) zoneInterface.getZoneByUserEmail(email).getBody()
-                .getData();
+            List<Telemetry> latestTelemetryList = new ArrayList<>();
+            for (Map<String, Object> map : allZones) {
+                String deviceId = (String) map.get("deviceId");
+                if (deviceId != null && !deviceId.isEmpty()) {
+                    telemetryRepository.findAllByDeviceIdOrderByReadTimeDesc(deviceId).stream().findFirst()
+                            .ifPresent(latestTelemetryList::add);
+                }
+            }
 
-        List<Telemetry> latestTelemetryList = new ArrayList<>();
-        for (Map<String, Object> map : allZones) {
-            String deviceId = (String) map.get("deviceId");
-            telemetryRepository.findAllByDeviceIdOrderByReadTimeDesc(deviceId).stream().findFirst()
-                    .ifPresent(latestTelemetryList::add);
+            return new APIResponse(200, "Successfully retrieved latest telemetry!", latestTelemetryList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new APIResponse(500, "Error: " + e.getMessage(), new ArrayList<>());
         }
-
-        return new APIResponse(200, "Successfully retrieved latest telemetry!", latestTelemetryList);
     }
 
     @Override
     public void fetchAndProcessTelemetry() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
 
-        ObjectMapper objectMapper = new ObjectMapper();
+            var response = zoneInterface.getAllZones();
+            if (response == null || response.getBody() == null) {
+                System.out.println("getAllZones response is null");
+                return;
+            }
 
-        @SuppressWarnings("unchecked")
-        List<Map<String, Object>> dataList = (List<Map<String, Object>>) zoneInterface.getAllZones().getBody()
-                .getData();
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> dataList = (List<Map<String, Object>>) response.getBody()
+                    .getData();
 
-        List<ZoneDTO> zones = dataList.stream()
-                .map(map -> objectMapper.convertValue(map, ZoneDTO.class))
-                .collect(Collectors.toList());
+            if (dataList == null || dataList.isEmpty()) {
+                System.out.println("No zones found in system");
+                return;
+            }
 
-        for (ZoneDTO zone : zones) {
-            System.out.println(zone.getZoneName() + " ++++++++++ " + zone.getDeviceId());
-            String deviceId = zone.getDeviceId();
-            SensorDataDTO telemetry = deviceService.getDeviceTelemetry(deviceId);
+            System.out.println("Found " + dataList.size() + " zones, processing...");
 
-            Telemetry t = new Telemetry(
-                    deviceId,
-                    telemetry.getValue().getTemperature(),
-                    telemetry.getValue().getHumidity(),
-                    LocalDateTime.now());
+            List<ZoneDTO> zones = dataList.stream()
+                    .map(map -> objectMapper.convertValue(map, ZoneDTO.class))
+                    .collect(Collectors.toList());
 
-            Telemetry savedTelemetry = telemetryRepository.save(t);
+            for (ZoneDTO zone : zones) {
+                String deviceId = zone.getDeviceId();
+                System.out.println("Zone: " + zone.getZoneName() + ", DeviceId: " + deviceId);
 
-            RequestDTO requestDTO = new RequestDTO(zone.getId(), savedTelemetry.getTemperature(),
-                    savedTelemetry.getHumidity());
-            automationService.callAutomationServiceToApplyLogic(requestDTO);
+                if (deviceId == null || deviceId.isEmpty()) {
+                    System.out.println("  Skipped - no deviceId");
+                    continue;
+                }
+
+                try {
+                    SensorDataDTO telemetry = deviceService.getDeviceTelemetry(deviceId);
+                    if (telemetry == null || telemetry.getValue() == null) {
+                        System.out.println("  Skipped - no telemetry data from IoT");
+                        continue;
+                    }
+
+                    System.out.println("  Saving telemetry - Temp: " + telemetry.getValue().getTemperature() + 
+                                     ", Humidity: " + telemetry.getValue().getHumidity());
+
+                    Telemetry t = new Telemetry(
+                            deviceId,
+                            telemetry.getValue().getTemperature(),
+                            telemetry.getValue().getHumidity(),
+                            LocalDateTime.now());
+
+                    Telemetry savedTelemetry = telemetryRepository.save(t);
+                    System.out.println("  Saved successfully - ID: " + savedTelemetry.getId());
+
+                    RequestDTO requestDTO = new RequestDTO(zone.getId(), savedTelemetry.getTemperature(),
+                            savedTelemetry.getHumidity());
+                    automationService.callAutomationServiceToApplyLogic(requestDTO);
+                } catch (Exception e) {
+                    System.out.println("  Error processing zone: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in fetchAndProcessTelemetry: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

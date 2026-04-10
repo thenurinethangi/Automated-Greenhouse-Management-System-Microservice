@@ -868,176 +868,304 @@ Farmer's Client App
 
 ### Overview
 
-Spring Cloud Config Server enables centralized management of all configuration properties across the distributed system.
+Spring Cloud Config Server provides centralized management of all configuration properties across the entire AGMS distributed system. This eliminates configuration drift and ensures consistency across all microservices.
+
+### ✨ Implementation Status: ✅ COMPLETED
+
+The centralized configuration system is now fully implemented and operational.
 
 ---
 
 ### Architecture
 
 ```
-Git Repository (Remote Source of Truth)
-    ↓
+Git Repository (Source of Truth)
+    ↓ (Central Config Storage)
 Spring Cloud Config Server (Port 8888)
-    ↓
-Microservices (Config Clients)
-    ├─ Zone Service
-    ├─ Sensor Telemetry Service
-    ├─ Automation Service
-    └─ Crop Inventory Service
+    ↓ (REST API)
+Microservices (Config Clients with bootstrap.yml)
+    ├─ Auth Service (8085)
+    ├─ Zone Service (8081)
+    ├─ Telemetry Service (8082)
+    ├─ Automation Service (8083)
+    ├─ Crop Inventory Service (8084)
+    ├─ API Gateway (8090)
+    ├─ IoT Service (8080)
+    └─ Service Registry (8761)
 ```
 
 ---
 
-### Configuration File Structure
+### Configuration Repository Structure
 
-**Git Repository Layout**:
+**Centralized Configuration Storage**:
 ```
-config-repo/
-├── application.yml                    # Shared config for all services
-├── application-dev.yml               # Development environment
-├── application-prod.yml              # Production environment
-├── zone-service.yml
-├── zone-service-dev.yml
-├── sensor-service.yml
-├── sensor-service-dev.yml
-├── automation-service.yml
-├── automation-service-dev.yml
-├── crop-inventory-service.yml
-└── crop-inventory-service-dev.yml
+config-repo/                          # Git-based configuration repository
+├── .gitignore
+├── authService.properties            # Auth Service configuration
+├── apiGetway.properties              # API Gateway configuration
+├── serviceRegistry.properties        # Eureka Server configuration
+├── automationservice.properties      # Automation Service configuration
+├── cropInventoryService.properties   # Crop Inventory Service configuration
+├── telemetryservice.properties       # Telemetry Service configuration
+├── zoneservice.properties            # Zone Service configuration
+└── iot-service.properties            # IoT Service configuration
 ```
 
-### Typical Configuration Example
-
-**application.yml** (Shared):
-```yaml
-spring:
-  application:
-    name: AGMS
-    
-server:
-  compression:
-    enabled: true
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
-
-# External IoT Provider Credentials
-iot:
-  provider:
-    baseUrl: http://104.211.95.241:8080/api
-    username: ${IOT_USERNAME}
-    password: ${IOT_PASSWORD}
-    pollInterval: 10000  # milliseconds
-
-# Datasource defaults
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: validate
+**Profile-Specific Configurations** (can be added for environments):
+```
+authService-dev.properties            # Development environment
+authService-prod.properties           # Production environment
+authService-staging.properties        # Staging environment
+... (same pattern for other services)
 ```
 
-**zone-service.yml**:
-```yaml
-server:
-  port: 8081
-  servlet:
-    context-path: /
 
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/zone_db
-    username: root
-    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+### Configuration Files Content
 
-# Service-specific properties
-zone:
-  validation:
-    minTempDifference: 5.0  # minTemp must be at least this much less than maxTemp
+Each service configuration file contains all necessary properties for that service:
+
+**authService.properties** (Example):
+```properties
+spring.application.name=authService
+server.port=8085
+
+# Database Configuration
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/authdb
+spring.datasource.username=root
+spring.datasource.password=Ijse@1234
+
+# Connection Pool Settings (HikariCP)
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.maximum-pool-size=20
+
+# JPA/Hibernate Settings
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# JWT Configuration
+accessToken.expiration=86000000
+secretKey1=MUZ21oHLiPPjCx8TbFBwp7tZA7mjhyZy3iUC1YItKUb
+secretKey2=joLo5dOLMXDGEaOvctN0w0YmENKBnVacSDLWET8WEEl
+
+# Eureka Service Discovery
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+eureka.client.register-with-eureka=true
 ```
 
-**automation-service.yml**:
-```yaml
-server:
-  port: 8083
+**zoneservice.properties** (Example):
+```properties
+spring.application.name=zoneservice
+server.port=8081
 
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/automation_db
-    username: postgres
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+# Database
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/zonedb
+spring.datasource.username=root
+spring.datasource.password=Ijse@1234
 
-# Rule engine configuration
-rules:
-  temperature:
-    fanThreshold: 32.0
-    heaterThreshold: 5.0
-  humidity:
-    ventilationThreshold: 75.0
-    misterThreshold: 40.0
+# IoT External Service
+iot.username=thenuri
+iot.password=1234567
+iot.base-url=http://localhost:8080/api
+
+# Service Discovery
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+eureka.client.register-with-eureka=true
 ```
 
 ---
 
 ### Client Configuration
 
-**Each microservice bootstrap file** (`bootstrap.yml` or `bootstrap.properties`):
+**Each microservice uses bootstrap.yml** to connect to the Config Server:
 
+```yaml
+# bootstrap.yml (present in each service's src/main/resources/)
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888              # Config Server URL
+      name: authService                       # Must match config filename
+      profile: default                        # default, dev, prod, etc.
+      fail-fast: true                         # Fail if Config Server unavailable
+      retry:
+        initial-interval: 1000                # Milliseconds
+        max-interval: 2000
+        max-attempts: 6                       # Retry 6 times before failing
+```
+
+#### Startup Sequence
+1. Service starts and loads `bootstrap.yml`
+2. `bootstrap.yml` points to Config Server at `http://localhost:8888`
+3. Config Server is contacted with service name (e.g., `authService`)
+4. Config Server retrieves `authService.properties` from Git repository
+5. Configuration is loaded and applied to the service
+6. Service continues normal initialization
+
+---
+
+### Supported Configurations Per Service
+
+#### Common Across All Services
+- `spring.application.name`: Unique service identifier
+- `server.port`: Service port
+- `spring.datasource.*`: Database connection settings
+- `spring.jpa.*`: JPA/Hibernate configuration
+- `eureka.client.*`: Service discovery settings
+- `server.tomcat.*`: Tomcat server settings
+
+#### Service-Specific
+- **Auth Service**: JWT secret keys, token expiration
+- **API Gateway**: Route definitions, JWT configuration
+- **Telemetry Service**: IoT sensor URLs, credentials
+- **Automation Service**: Rule engine settings, service URLs
+- **Zone Service**: IoT credentials, base URLs
+- **IoT Service**: R2DBC configuration, JWT secrets
+
+---
+
+### How to Update Configurations
+
+#### Method 1: Direct File Update
+```bash
+# 1. Navigate to config repository
+cd d:\agms\agms\config-repo
+
+# 2. Edit the service configuration
+vim authService.properties   # or use your editor
+
+# 3. Commit to Git
+git add authService.properties
+git commit -m "Update database credentials for authService"
+```
+
+#### Method 2: Using Git Commands
+```bash
+git status                                    # Check changes
+git diff authService.properties               # Review changes
+git add .
+git commit -m "Configuration updates"
+git log --oneline                            # View commit history
+```
+
+#### Refresh Service After Update
+```bash
+# Option 1: Restart the service
+# Stop the service (Ctrl+C) and restart
+mvn spring-boot:run
+
+# Option 2: Use /actuator/refresh endpoint (if enabled)
+curl -X POST http://localhost:8085/actuator/refresh
+```
+
+---
+
+### Environment-Specific Configurations
+
+To support multiple environments (development, staging, production):
+
+#### 1. Create Profile-Specific Files
+```
+config-repo/
+├── authService.properties          # Default/shared config
+├── authService-dev.properties      # Development overrides
+├── authService-staging.properties  # Staging overrides
+└── authService-prod.properties     # Production config
+```
+
+#### 2. Update bootstrap.yml Profile
 ```yaml
 spring:
   cloud:
     config:
       uri: http://localhost:8888
-      fail-fast: true
-      retry:
-        initial-interval: 1000
-        max-interval: 3000
-        max-attempts: 5
-  application:
-    name: zone-service  # Matches zone-service.yml in config repo
-  profiles:
-    active: dev  # Loads zone-service-dev.yml
+      name: authService
+      profile: prod                  # Change this for different environments
 ```
+
+#### 3. Configuration Priority (Highest to Lowest)
+1. Environment-specific profile (e.g., `authService-prod.properties`)
+2. Default profile (e.g., `authService.properties`)
+3. Service defaults in code
 
 ---
 
-### Dynamic Property Refresh
+### Getting Started with Config Server
 
-Services can refresh configuration without restart:
+For quick setup and detailed instructions, see:
 
-```java
-@RestController
-@RequestMapping("/actuator")
-public class ConfigRefreshController {
-    
-    @PostMapping("/refresh")
-    public ResponseEntity<?> refresh() {
-        // Triggers refresh of @ConfigurationProperties beans
-        return ResponseEntity.ok("Configuration refreshed");
-    }
-}
-```
+---
 
-**Usage**:
+- 📖 [Quick Start Guide](./QUICKSTART_CONFIG_SERVER.md)
+- 📘 [Detailed Configuration Documentation](./agms/configServer/CONFIG_SERVER_README.md)
+
+---
+
+### Quick Reference Commands
+
+**Start Config Server**:
 ```bash
-# Refresh configuration on running service
-curl -X POST http://localhost:8081/actuator/refresh
+cd d:\agms\agms\configServer
+mvn clean install
+mvn spring-boot:run
+```
+
+**Test Config Server is Running**:
+```bash
+# Fetch authService configuration
+curl http://localhost:8888/authService/default
+
+# Should return JSON with all properties for authService
+```
+
+**Start All Services** (in order):
+```bash
+# Terminal 1: Config Server
+cd d:\agms\agms\configServer && mvn spring-boot:run
+
+# Terminal 2: Service Registry
+cd d:\agms\agms\serviceRegistry && mvn spring-boot:run
+
+# Terminals 3-10: Other services (any order)
+cd d:\agms\agms\authService && mvn spring-boot:run
+cd d:\agms\agms\zoneservice && mvn spring-boot:run
+cd d:\agms\agms\telemetryservice && mvn spring-boot:run
+cd d:\agms\agms\automationservice && mvn spring-boot:run
+cd d:\agms\agms\cropInventoryService && mvn spring-boot:run
+cd d:\agms\agms\apiGetway && mvn spring-boot:run
+cd d:\agms\agms\IoTService\iot-backend && mvn spring-boot:run
+```
+
+**Verify Services are Registered**:
+```bash
+curl http://localhost:8761/  # Eureka Dashboard
+```
+
+**View Git Commit History of Configurations**:
+```bash
+cd d:\agms\agms\config-repo
+git log --oneline             # Show commits
+git diff HEAD~1               # Show latest changes
 ```
 
 ---
 
-## API Endpoints
+### Key Benefits
+
+✅ **Single Source of Truth**: All configurations in one Git repository  
+✅ **Version Control**: Track all configuration changes  
+✅ **No Code Rebuild Required**: Update configs and restart service  
+✅ **Multi-Environment Support**: Dev, staging, production profiles  
+✅ **Consistency**: Ensure all services have correct configurations  
+✅ **Easy Rollback**: Revert configurations via Git  
+✅ **Scalability**: Simple to add new services  
+
+---
+
+### API Endpoints
 
 ### Zone Management Service (Port 8081)
 
