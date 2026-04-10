@@ -7,7 +7,7 @@ public interface ZoneService {
 
     public APIResponse createZone(ZoneDTO zoneDTO, String email);
 
-    public APIResponse getAllZones(String email);
+    public APIResponse getAllZones();
 
     public APIResponse getZoneById(Long id, String email);
 

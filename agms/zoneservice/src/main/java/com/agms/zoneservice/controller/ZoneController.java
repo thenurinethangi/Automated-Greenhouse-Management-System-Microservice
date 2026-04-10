@@ -33,8 +33,8 @@ public class ZoneController {
     }
 
     @GetMapping
-    public ResponseEntity<APIResponse> getAllZones(@RequestHeader("User-Email") String email) {
-        APIResponse response = zoneService.getAllZones(email);
+    public ResponseEntity<APIResponse> getAllZones() {
+        APIResponse response = zoneService.getAllZones();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

@@ -44,9 +44,9 @@ public class ZoneServiceImpl implements ZoneService {
         return new APIResponse(200, "successfully create a new zone", savedZone);
     }
 
-    public APIResponse getAllZones(String email) {
+    public APIResponse getAllZones() {
 
-        List<Zone> zones = zoneRepository.findAllByUserEmail(email);
+        List<Zone> zones = zoneRepository.findAll();
         return new APIResponse(200, "successfully retrieved all zones", zones);
     }
 
