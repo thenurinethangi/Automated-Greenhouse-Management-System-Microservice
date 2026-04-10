@@ -39,13 +39,13 @@ The **Automated Greenhouse Management System (AGMS)** is a cloud-native, microse
 
 By completing this project, developers will master:
 
-✓ **Distributed Systems Architecture**: Design and implement microservices using Spring Boot and Spring Cloud  
-✓ **Service Discovery**: Utilize Netflix Eureka for dynamic service registration  
-✓ **API Routing & Gateway Pattern**: Configure Spring Cloud Gateway as a central entry point  
-✓ **Security**: Implement JWT-based authorization at the Gateway level  
-✓ **Inter-Service Communication**: Use OpenFeign for synchronous HTTP communication  
-✓ **Centralized Configuration**: Manage distributed properties via Spring Cloud Config Server  
-✓ **Polyglot Development**: Integrate services built with different technology stacks
+- **Distributed Systems Architecture**: Design and implement microservices using Spring Boot and Spring Cloud  
+- **Service Discovery**: Utilize Netflix Eureka for dynamic service registration  
+- **API Routing & Gateway Pattern**: Configure Spring Cloud Gateway as a central entry point  
+- **Security**: Implement JWT-based authorization at the Gateway level  
+- **Inter-Service Communication**: Use OpenFeign for synchronous HTTP communication  
+- **Centralized Configuration**: Manage distributed properties via Spring Cloud Config Server  
+- **Polyglot Development**: Integrate services built with different technology stacks
 
 ---
 
@@ -230,13 +230,13 @@ Update credentials in the centralized configuration for accessing:
 
 ## Running the Services
 
-### ⚠️ CRITICAL: Service Startup Order
+### CRITICAL: Service Startup Order
 
 **Services MUST be started in this specific order:**
 
 #### **Phase 1: Infrastructure Services (Start First)**
 
-##### 1️⃣ **Start Eureka Service Registry (Port: 8761)**
+##### 1. **Start Eureka Service Registry (Port: 8761)**
 ```bash
 cd serviceRegistry
 mvn clean install
@@ -244,11 +244,11 @@ mvn spring-boot:run
 ```
 **Output**: `Eureka Dashboard available at http://localhost:8761`
 
-⏳ Wait 5-10 seconds to ensure Eureka is fully initialized.
+Wait 5-10 seconds to ensure Eureka is fully initialized.
 
 ---
 
-##### 2️⃣ **Start Configuration Server (Port: 8888)**
+##### 2. **Start Configuration Server (Port: 8888)**
 ```bash
 cd telemetryservice
 mvn clean install
@@ -256,13 +256,13 @@ mvn spring-boot:run
 ```
 **Output**: Config Server starts and connects to Eureka.
 
-⏳ Wait for: `"Registering application TELEMETRY-SERVICE with Eureka"`
+Wait for: `"Registering application TELEMETRY-SERVICE with Eureka"`
 
 > **Note**: This service doubles as the Config Server. Ensure Git repository is accessible for centralized configuration files.
 
 ---
 
-##### 3️⃣ **Start API Gateway (Port: 8080)**
+##### 3. **Start API Gateway (Port: 8080)**
 ```bash
 cd apiGetway
 mvn clean install
@@ -270,13 +270,13 @@ mvn spring-boot:run
 ```
 **Output**: Gateway starts, registers with Eureka, and begins accepting external requests.
 
-⏳ Verify: Check Eureka dashboard (http://localhost:8761) - should show `APIGATEWAY` instance.
+Verify: Check Eureka dashboard (http://localhost:8761) - should show `APIGATEWAY` instance.
 
 ---
 
 #### **Phase 2: Domain Microservices (Start After Infrastructure)**
 
-##### 4️⃣ **Start Zone Management Service (Port: 8081)**
+##### 4. **Start Zone Management Service (Port: 8081)**
 ```bash
 cd zoneservice
 mvn clean install
@@ -285,7 +285,7 @@ mvn spring-boot:run
 
 ---
 
-##### 5️⃣ **Start Sensor Telemetry Service (Port: 8082)**
+##### 5. **Start Sensor Telemetry Service (Port: 8082)**
 ```bash
 cd automationservice
 mvn clean install
@@ -294,7 +294,7 @@ mvn spring-boot:run
 
 ---
 
-##### 6️⃣ **Start Automation & Control Service (Port: 8083)**
+##### 6. **Start Automation & Control Service (Port: 8083)**
 ```bash
 cd automationservice
 mvn clean install
@@ -303,7 +303,7 @@ mvn spring-boot:run
 
 ---
 
-##### 7️⃣ **Start Crop Inventory Service (Port: 8084)**
+##### 7. **Start Crop Inventory Service (Port: 8084)**
 ```bash
 cd cropInventoryService
 mvn clean install
@@ -317,11 +317,11 @@ mvn spring-boot:run
 After all services are running, verify:
 
 1. **Eureka Dashboard**: http://localhost:8761
-   - ✓ APIGATEWAY
-   - ✓ ZONE-SERVICE
-   - ✓ SENSOR-TELEMETRY-SERVICE
-   - ✓ AUTOMATION-SERVICE
-   - ✓ CROP-INVENTORY-SERVICE
+   - APIGATEWAY
+   - ZONE-SERVICE
+   - SENSOR-TELEMETRY-SERVICE
+   - AUTOMATION-SERVICE
+   - CROP-INVENTORY-SERVICE
 
 2. **Gateway Accessibility**: 
    ```bash
@@ -377,10 +377,10 @@ configs/
 **Purpose**: Central entry point routing all external client requests to appropriate microservices.
 
 **Key Responsibilities**:
-- ✓ Route requests to correct microservice (`/api/zones/**` → Zone Service)
-- ✓ JWT token validation (see [Security Implementation](#security-implementation))
-- ✓ Request/Response transformation
-- ✓ Cross-cutting concerns (logging, metrics)
+- Route requests to correct microservice (`/api/zones/**` → Zone Service)
+- JWT token validation (see [Security Implementation](#security-implementation))
+- Request/Response transformation
+- Cross-cutting concerns (logging, metrics)
 
 **Route Configuration Example**:
 ```yaml
@@ -587,7 +587,7 @@ public class RuleEngine {
 ```
 
 **Benefits**:
-- ✓ Simple and intuitive (RPC-style)
+- Simple and intuitive (RPC-style)
 - ✓ Guaranteed delivery and response
 - ✓ Synchronous transaction support
 
@@ -870,7 +870,7 @@ Farmer's Client App
 
 Spring Cloud Config Server provides centralized management of all configuration properties across the entire AGMS distributed system. This eliminates configuration drift and ensures consistency across all microservices.
 
-### ✨ Implementation Status: ✅ COMPLETED
+### Implementation Status: 
 
 The centralized configuration system is now fully implemented and operational.
 
@@ -1155,13 +1155,13 @@ git diff HEAD~1               # Show latest changes
 
 ### Key Benefits
 
-✅ **Single Source of Truth**: All configurations in one Git repository  
-✅ **Version Control**: Track all configuration changes  
-✅ **No Code Rebuild Required**: Update configs and restart service  
-✅ **Multi-Environment Support**: Dev, staging, production profiles  
-✅ **Consistency**: Ensure all services have correct configurations  
-✅ **Easy Rollback**: Revert configurations via Git  
-✅ **Scalability**: Simple to add new services  
+- **Single Source of Truth**: All configurations in one Git repository
+- **Version Control**: Track all configuration changes
+- **No Code Rebuild Required**: Update configs and restart service
+- **Multi-Environment Support**: Dev, staging, production profiles
+- **Consistency**: Ensure all services have correct configurations
+- **Easy Rollback**: Revert configurations via Git
+- **Scalability**: Simple to add new services
 
 ---
 

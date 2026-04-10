@@ -1,0 +1,1381 @@
+{
+  "info": {
+    "_postman_id": "db2af539-fbaa-40d7-ae73-e0960d0e1520",
+    "name": "agms",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44983659"
+  },
+  "item": [
+    {
+      "name": "authService",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"nethangi@gmail.com\",\r\n    \"fullName\": \"Nethangi Nanayakkara\",\r\n    \"password\": \"1234567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "register",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"nethangi@gmail.com\",\r\n    \"fullName\": \"Nethangi Nanayakkara\",\r\n    \"password\": \"1234567\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/auth/register",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "59"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 17:55:04 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Registration successful\",\n    \"data\": 9\n}"
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"nethangi@gmail.com\",\r\n    \"password\": \"1234567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"nethangi@gmail.com\",\r\n    \"password\": \"1234567\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/auth/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "425"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 17:55:48 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.UNkAtWebolgonXMEtAQdLrfXfNkq5xXpSR8C99UMces\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "new-access-token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.UNkAtWebolgonXMEtAQdLrfXfNkq5xXpSR8C99UMces\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/auth/access-token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "auth",
+                "access-token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "new-access-token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.UNkAtWebolgonXMEtAQdLrfXfNkq5xXpSR8C99UMces\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/auth/access-token",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "auth",
+                    "access-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "248"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 17:57:12 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"New access token generated\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzODMyLCJleHAiOjE3NzU5Mjk4MzJ9.BTSgLjuufQm44iTSlXPMdWo0FSQFwVKcB_aNWjvlLag\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zoneService",
+      "item": [
+        {
+          "name": "create-new-zone",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"zoneName\": \"Potato zone\",\r\n    \"minTemp\": 15.5,\r\n    \"maxTemp\": 27\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/zones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "zones"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create-new-zone",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"zoneName\": \"Potato zone\",\r\n    \"minTemp\": 15.5,\r\n    \"maxTemp\": 27\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/zones",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "zones"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:05:54 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"successfully create a new zone\",\n    \"data\": {\n        \"deviceId\": \"875c1d13-ef08-4494-821d-704f5b825c79\",\n        \"id\": 4,\n        \"maxTemp\": 27,\n        \"minTemp\": 15.5,\n        \"userEmail\": \"nethangi@gmail.com\",\n        \"zoneName\": \"Potato zone\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get-zone-by-id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/zones/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "zones",
+                "3"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get-zone-by-id",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8090/api/zones/3",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "zones",
+                    "3"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:03:58 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"successfully retrieved the zone\",\n    \"data\": {\n        \"deviceId\": \"719f3575-7793-4eb5-9720-00a061684030\",\n        \"id\": 3,\n        \"maxTemp\": 20,\n        \"minTemp\": 10.5,\n        \"userEmail\": \"nethangi@gmail.com\",\n        \"zoneName\": \"Carrot zone\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update-thresholds",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"minTemp\": 11.5,\r\n    \"maxTemp\": 21\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/zones/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "zones",
+                "3"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "update-thresholds",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"minTemp\": 11.5,\r\n    \"maxTemp\": 21\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/zones/3",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "zones",
+                    "3"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:04:42 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"successfully update the zone's thresholds\",\n    \"data\": {\n        \"deviceId\": \"719f3575-7793-4eb5-9720-00a061684030\",\n        \"id\": 3,\n        \"maxTemp\": 21,\n        \"minTemp\": 11.5,\n        \"userEmail\": \"nethangi@gmail.com\",\n        \"zoneName\": \"Carrot zone\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete-zone",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/zones/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "zones",
+                "4"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "delete-zone",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8090/api/zones/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "zones",
+                    "4"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:06:01 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"successfully deleted the zone\",\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "get-all-zones",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/zones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "zones"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get-all-zones",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8090/api/zones",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "zones"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:06:47 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"successfully retrieved all zones\",\n    \"data\": [\n        {\n            \"deviceId\": \"afe7dee7-de59-4f72-80e1-81d636f89153\",\n            \"id\": 2,\n            \"maxTemp\": 20,\n            \"minTemp\": 10.5,\n            \"userEmail\": \"tttttt@gmail.com\",\n            \"zoneName\": \"Carrot zone\"\n        },\n        {\n            \"deviceId\": \"719f3575-7793-4eb5-9720-00a061684030\",\n            \"id\": 3,\n            \"maxTemp\": 21,\n            \"minTemp\": 11.5,\n            \"userEmail\": \"nethangi@gmail.com\",\n            \"zoneName\": \"Carrot zone\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "get-zones-by-user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/zones/user/nethangi@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "zones",
+                "user",
+                "nethangi@gmail.com"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get-zones-by-user",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8090/api/zones/user/nethangi@gmail.com",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "zones",
+                    "user",
+                    "nethangi@gmail.com"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Content-Disposition",
+                  "value": "inline;filename=f.txt"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:09:04 GMT"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"successfully retrieved the zone\",\n    \"data\": [\n        {\n            \"deviceId\": \"719f3575-7793-4eb5-9720-00a061684030\",\n            \"id\": 3,\n            \"maxTemp\": 21,\n            \"minTemp\": 11.5,\n            \"userEmail\": \"nethangi@gmail.com\",\n            \"zoneName\": \"Carrot zone\"\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cropInventoryService",
+      "item": [
+        {
+          "name": "register-new-batch",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"cropName\": \"carrot\",\r\n    \"quantity\": 100\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/crops",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "crops"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "register-new-batch",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"cropName\": \"carrot\",\r\n    \"quantity\": 100\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/crops",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "crops"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:15:11 GMT"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Crop batch registered successfully\",\n    \"data\": {\n        \"createdAt\": \"2026-04-10T18:15:11.376Z\",\n        \"cropName\": \"carrot\",\n        \"id\": 2,\n        \"quantity\": 100,\n        \"status\": \"SEEDLING\",\n        \"userEmail\": \"nethangi@gmail.com\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "current-inventory",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/crops",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "crops"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "current-inventory",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8090/api/crops",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "crops"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:18:46 GMT"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Current crop inventory retrieved successfully\",\n    \"data\": [\n        {\n            \"createdAt\": \"2026-04-10T18:15:11.376Z\",\n            \"cropName\": \"carrot\",\n            \"id\": 2,\n            \"quantity\": 100,\n            \"status\": \"VEGETATIVE\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "update-status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"VEGETATIVE\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/crops/2/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "crops",
+                "2",
+                "status"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "update-status",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"VEGETATIVE\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8090/api/crops/2/status",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8090",
+                  "path": [
+                    "api",
+                    "crops",
+                    "2",
+                    "status"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 18:18:09 GMT"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Crop status updated successfully\",\n    \"data\": {\n        \"createdAt\": \"2026-04-10T18:15:11.376Z\",\n        \"cropName\": \"carrot\",\n        \"id\": 2,\n        \"quantity\": 100,\n        \"status\": \"VEGETATIVE\",\n        \"userEmail\": \"nethangi@gmail.com\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "telemetryService",
+      "item": [
+        {
+          "name": "latest-telemetry",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/sensors/latest",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "sensors",
+                "latest"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "automationService",
+      "item": [
+        {
+          "name": "latest-logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXRoYW5naUBnbWFpbC5jb20iLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzc1ODQzNzQ4LCJleHAiOjE3NzU5Mjk3NDh9.RADXOYUdagy7w9v3C5dGvQKBJ5kv_fVj5eyvMJ0kzIM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/automation/logs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8090",
+              "path": [
+                "api",
+                "automation",
+                "logs"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
