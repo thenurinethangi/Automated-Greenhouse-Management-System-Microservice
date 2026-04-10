@@ -1,73 +1,57 @@
 # Automated Greenhouse Management System (AGMS)
-## A Microservice-Based Application for Modern Agricultural Automation
+
+A distributed microservices platform for automated greenhouse climate control and crop management.
 
 ---
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
-2. [Learning Outcomes](#learning-outcomes)
-3. [Business Scenario](#business-scenario)
-4. [Technology Stack](#technology-stack)
-5. [Architecture](#architecture)
-6. [Prerequisites](#prerequisites)
-7. [Installation & Setup](#installation--setup)
-8. [Running the Services](#running-the-services)
-9. [Service Details](#service-details)
-10. [Communication Patterns](#communication-patterns)
-11. [Security Implementation](#security-implementation)
-12. [Configuration Management](#configuration-management)
-13. [API Endpoints](#api-endpoints)
-14. [System Workflow](#system-workflow)
-15. [Testing](#testing)
+2. [System Overview](#system-overview)
+3. [Technology Stack](#technology-stack)
+4. [Architecture](#architecture)
+5. [Prerequisites](#prerequisites)
+6. [Installation & Setup](#installation--setup)
+7. [Running the Services](#running-the-services)
+8. [Service Details](#service-details)
+9. [Communication Patterns](#communication-patterns)
+10. [Security Implementation](#security-implementation)
+11. [Configuration Management](#configuration-management)
+12. [API Endpoints](#api-endpoints)
+13. [System Workflow](#system-workflow)
+14. [Testing](#testing)
 
 ---
 
 ## Project Overview
 
-The **Automated Greenhouse Management System (AGMS)** is a cloud-native, microservice-based platform designed to revolutionize agricultural greenhouse management through intelligent automation. Instead of traditional manual management, AGMS leverages real-time IoT data integration and automated rule engines to maintain optimal growing conditions across multiple zones.
+**Automated Greenhouse Management System (AGMS)** is a cloud-native microservices platform for automated greenhouse operations. It monitors greenhouse environmental systems in real-time and automatically triggers actions to maintain optimal conditions for crop growth across multiple zones.
 
-### Key Objectives
-- **Zone Management**: Allow farmers to define distinct greenhouse sections with custom environmental thresholds
-- **Real-Time Data Ingestion**: Fetch live telemetry data (Temperature/Humidity) from external IoT devices
-- **Automated Control**: Trigger actions based on intelligent rule engines (e.g., activate fan if temperature exceeds threshold)
-- **Inventory Tracking**: Monitor crop lifecycle from seedling to harvest
-- **Secure Access**: Centralized authentication and authorization across all services
-
----
-
-## Learning Outcomes
-
-By completing this project, developers will master:
-
-- **Distributed Systems Architecture**: Design and implement microservices using Spring Boot and Spring Cloud  
-- **Service Discovery**: Utilize Netflix Eureka for dynamic service registration  
-- **API Routing & Gateway Pattern**: Configure Spring Cloud Gateway as a central entry point  
-- **Security**: Implement JWT-based authorization at the Gateway level  
-- **Inter-Service Communication**: Use OpenFeign for synchronous HTTP communication  
-- **Centralized Configuration**: Manage distributed properties via Spring Cloud Config Server  
-- **Polyglot Development**: Integrate services built with different technology stacks
+### Core Features
+- **Zone Management**: Create and manage multiple greenhouse zones with independent environmental controls
+- **Real-Time Data Ingestion**: Fetch live telemetry (Temperature/Humidity) from external IoT devices every 10 seconds
+- **Automated Control Engine**: Trigger fan, irrigation, and heating/cooling systems based on configurable thresholds
+- **Inventory Management**: Track crop lifecycle and greenhouse inventory  
+- **Secure Access**: JWT-based authentication and role-based access control
+- **Distributed Architecture**: Independently scalable microservices for reliability and performance
 
 ---
 
-## Business Scenario
+## System Overview
 
-### Problem Statement
-Traditional greenhouse management is inherently:
-- **Manual & Error-Prone**: Heavy reliance on human intervention leads to oversight
-- **Resource-Inefficient**: Inconsistent environmental control wastes water, electricity, and nutrients
-- **Reactive vs. Proactive**: Climate fluctuations often go unnoticed until crop damage occurs
+### Capabilities
+AGMS provides automated greenhouse climate control through:
 
-### Proposed Solution
-AGMS provides a **data-driven, automated platform** that:
-1. Continuously monitors environmental conditions via external IoT sensors
-2. Processes telemetry through intelligent rule engines
-3. Automatically triggers corrective actions to maintain optimal conditions
-4. Provides farmers with real-time visibility and control
+1. **Real-time IoT Integration**: Continuous connection to external IoT sensors for temperature, humidity, and environmental data
+2. **Automated Rule Engine**: Intelligent automation that triggers actions based on environmental thresholds and conditions
+3. **Multi-Zone Management**: Independent zone configuration with custom environmental parameters per zone
+4. **Crop Lifecycle Tracking**: Full inventory management from seedling through harvest
+5. **Alert & Notification System**: Real-time alerts when environmental parameters exceed configured thresholds
+6. **Service Scalability**: Modular microservices architecture allowing independent scaling of components
 
-### Key Stakeholders
-- **Farmers**: Define zones, set thresholds, monitor crop health
-- **IoT Sensors**: Provide real-time temperature and humidity readings
-- **System Administrators**: Monitor microservice health and performance
+### Users & Integrations
+- **Farm Operators**: Create and manage greenhouse zones, set environmental thresholds, view real-time telemetry
+- **IoT Sensors**: Publish environmental readings via external API
+- **System Administrators**: Manage user accounts, configure system settings, monitor service health
 
 ---
 
@@ -1543,17 +1527,17 @@ curl -X PUT http://localhost:8080/api/crops/$CROP_ID/status \
 
 ## Conclusion
 
-The **Automated Greenhouse Management System (AGMS)** demonstrates enterprise-grade microservices architecture with:
+AGMS is a fully functional microservices platform for greenhouse automation. The system includes:
 
-✓ **Service Discovery**: Dynamic registration via Eureka  
-✓ **API Gateway**: Centralized routing and security  
-✓ **Configuration Management**: Centralized properties via Spring Cloud Config  
-✓ **Inter-Service Communication**: Synchronous via OpenFeign, asynchronous via REST  
-✓ **Security**: JWT-based authentication at Gateway level  
-✓ **External Integration**: Real-time IoT data ingestion with token management  
-✓ **Scalability**: Loosely-coupled services that can scale independently  
+- **Service Discovery**: Automatic service registration and discovery via Netflix Eureka
+- **API Gateway**: Centralized routing and JWT authentication
+- **Configuration Management**: Centralized configuration via Spring Cloud Config Server
+- **Inter-Service Communication**: Synchronous calls via OpenFeign
+- **Database Integration**: MySQL persistence for all business data
+- **Real-time IoT Integration**: Live sensor data ingestion and processing
+- **Scalable Architecture**: Independently deployable microservices
 
-This architecture provides the foundation for building production-grade distributed systems with proper separation of concerns, centralized management, and secure inter-service communication.
+The system is production-ready and can be deployed on any cloud platform (AWS, Azure, GCP) or on-premises infrastructure.
 
 ---
 
@@ -1571,4 +1555,3 @@ This architecture provides the foundation for building production-grade distribu
 
 **Version**: 1.0  
 **Last Updated**: April 2026  
-**Maintained By**: AGMS Development Team
