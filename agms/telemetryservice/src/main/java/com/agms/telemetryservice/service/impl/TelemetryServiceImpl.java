@@ -35,9 +35,9 @@ public class TelemetryServiceImpl implements TelemetryService {
     private final ZoneInterface zoneInterface;
 
     @Override
-    public APIResponse fetchLatest() {
+    public APIResponse fetchLatest(String email) {
 
-        List<Map<String, Object>> allZones = (List<Map<String, Object>>) zoneInterface.getAllZones().getBody()
+        List<Map<String, Object>> allZones = (List<Map<String, Object>>) zoneInterface.getZoneByUserEmail(email).getBody()
                 .getData();
 
         List<Telemetry> latestTelemetryList = new ArrayList<>();

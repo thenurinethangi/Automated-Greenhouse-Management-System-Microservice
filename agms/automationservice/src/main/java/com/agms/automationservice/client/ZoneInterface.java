@@ -12,4 +12,7 @@ public interface ZoneInterface {
 
     @GetMapping("/{id}")
     public ResponseEntity<APIResponse> getZoneById(@PathVariable Long id);
+
+    @GetMapping("/user/{email}")
+    public ResponseEntity<APIResponse> getZoneByUserEmail(@PathVariable String email);
 }

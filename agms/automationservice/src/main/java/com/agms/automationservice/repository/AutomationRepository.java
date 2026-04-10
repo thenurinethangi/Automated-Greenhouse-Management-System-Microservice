@@ -7,5 +7,7 @@ import com.agms.automationservice.entity.Log;
 
 @Repository
 public interface AutomationRepository extends JpaRepository<Log, Long> {
+
+    public Log findFirstByZoneIdOrderByTimestampDesc(Long zoneId);
     
 }

@@ -1,7 +1,9 @@
 package com.agms.automationservice.service.impl;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
@@ -63,13 +65,20 @@ public class AutomationServiceImpl implements AutomationService {
     }
 
     @Override
-    public APIResponse listAllTriggeredActions() {
+    public APIResponse listAllTriggeredActions(String email) {
 
-        automationRepository.findAll().forEach(log -> {
-            System.out.println("Log ID: " + log.getId() + ", Zone ID: " + log.getZoneId() + ", Action: "
-                    + log.getActionTaken() + ", Timestamp: " + log.getTimestamp());
+        List<Map<String, Object>> allZones = (List<Map<String, Object>>) zoneInterface.getZoneByUserEmail(email).getBody()
+                .getData();
+
+        List<Log> log = new ArrayList<>();
+        allZones.forEach(zone -> {
+            Object zoneId = zone.get("id");
+            Long id = zoneId instanceof Long ? (Long) zoneId : ((Number) zoneId).longValue();
+            Log l = automationRepository.findFirstByZoneIdOrderByTimestampDesc(id);
+            log.add(l);
         });
-        return new APIResponse(200, "Logs retrieved successfully", automationRepository.findAll());
+
+        return new APIResponse(200, "Logs retrieved successfully", log);
 
     }
 }

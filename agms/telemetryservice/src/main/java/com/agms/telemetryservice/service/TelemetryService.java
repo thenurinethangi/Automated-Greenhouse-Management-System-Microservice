@@ -4,7 +4,7 @@ import com.agms.telemetryservice.util.APIResponse;
 
 public interface TelemetryService {
     
-    public APIResponse fetchLatest();
+    public APIResponse fetchLatest(String email);
 
     public void fetchAndProcessTelemetry();
 }

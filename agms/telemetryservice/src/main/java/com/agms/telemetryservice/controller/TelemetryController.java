@@ -21,7 +21,7 @@ public class TelemetryController {
     @GetMapping("/latest")
     public ResponseEntity<APIResponse> fetchLatest(@RequestHeader("User-Email") String email) {
 
-        APIResponse response = telemetryService.fetchLatest();
+        APIResponse response = telemetryService.fetchLatest(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

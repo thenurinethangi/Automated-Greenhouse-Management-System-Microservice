@@ -7,6 +7,6 @@ public interface AutomationService {
 
     public APIResponse processLogic(RequestDTO requestDTO);
 
-    public APIResponse listAllTriggeredActions();
+    public APIResponse listAllTriggeredActions(String email);
     
 }
