@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.agms.zoneservice.dto.DeviceDTO;
-import com.agms.zoneservice.feign.IoTDeviceInterface;
+import com.agms.zoneservice.client.IoTDeviceInterface;
 import com.agms.zoneservice.service.IoTAuthService;
 import com.agms.zoneservice.service.IoTDeviceService;
 

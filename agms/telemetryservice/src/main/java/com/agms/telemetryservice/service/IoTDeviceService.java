@@ -1,8 +1,8 @@
 package com.agms.telemetryservice.service;
 
-import java.util.Map;
+import com.agms.telemetryservice.dto.SensorDataDTO;
 
 public interface IoTDeviceService {
     
-    public Map<String, String> getDeviceTelemetry(String deviceId);
+    public SensorDataDTO getDeviceTelemetry(String deviceId);
 }

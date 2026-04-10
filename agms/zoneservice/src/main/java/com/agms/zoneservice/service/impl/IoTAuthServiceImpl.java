@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.agms.zoneservice.dto.UserDTO;
-import com.agms.zoneservice.feign.IoTAuthInterface;
+import com.agms.zoneservice.client.IoTAuthInterface;
 import com.agms.zoneservice.service.IoTAuthService;
 
 @Service

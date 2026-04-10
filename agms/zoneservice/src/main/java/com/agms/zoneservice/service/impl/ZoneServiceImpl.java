@@ -50,14 +50,11 @@ public class ZoneServiceImpl implements ZoneService {
         return new APIResponse(200, "successfully retrieved all zones", zones);
     }
 
-    public APIResponse getZoneById(Long id, String email) {
+    public APIResponse getZoneById(Long id) {
 
         Zone zone = zoneRepository.findById(id).orElse(null);
         if (zone == null) {
             return new APIResponse(404, "zone not found", null);
-        }
-        if (zone.getUserEmail() != null && !zone.getUserEmail().equals(email)) {
-            return new APIResponse(403, "forbidden access to the zone", null);
         }
 
         return new APIResponse(200, "successfully retrieved the zone", zone);

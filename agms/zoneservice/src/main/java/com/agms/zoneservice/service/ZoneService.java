@@ -9,7 +9,7 @@ public interface ZoneService {
 
     public APIResponse getAllZones();
 
-    public APIResponse getZoneById(Long id, String email);
+    public APIResponse getZoneById(Long id);
 
     public APIResponse updateThresholdsById(Long id, ZoneDTO zoneDTO, String email);
 

@@ -1,4 +1,4 @@
-package com.agms.automationservice.dto;
+package com.agms.telemetryservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

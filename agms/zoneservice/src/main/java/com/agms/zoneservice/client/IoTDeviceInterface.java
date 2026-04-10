@@ -1,4 +1,4 @@
-package com.agms.zoneservice.feign;
+package com.agms.zoneservice.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

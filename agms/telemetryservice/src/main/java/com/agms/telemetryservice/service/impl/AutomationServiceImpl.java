@@ -2,38 +2,24 @@ package com.agms.telemetryservice.service.impl;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-
+import com.agms.telemetryservice.client.AutomationInterface;
+import com.agms.telemetryservice.dto.RequestDTO;
 import com.agms.telemetryservice.service.AutomationService;
-import com.agms.telemetryservice.service.IoTAuthService;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AutomationServiceImpl implements AutomationService {
 
-    private final WebClient webClient;
-    private final IoTAuthService authService;
-
-    public AutomationServiceImpl(WebClient.Builder builder, IoTAuthService authService,
-            @Value("${automation.service.base-url}") String automationServiceBaseUrl) {
-        this.webClient = builder.baseUrl(automationServiceBaseUrl).build();
-        this.authService = authService;
-    }
+    private final AutomationInterface automationInterface;
 
     @Override
-    public Map<String, Object> callAutomationServiceToApplyLogic(Map<String, Object> data) {
+    public Map<String, Object> callAutomationServiceToApplyLogic(RequestDTO requestDTO) {
 
-        Map<String, Object> response = webClient.post()
-                .uri("/api/automation/process")
-                .bodyValue(data)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-                })
-                .block();
-
-        return response;
+        automationInterface.processLogic(requestDTO).getBody();
+        return null;
     }
 
 }

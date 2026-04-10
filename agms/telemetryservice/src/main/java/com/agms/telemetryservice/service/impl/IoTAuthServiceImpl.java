@@ -1,16 +1,16 @@
 package com.agms.telemetryservice.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
+import com.agms.telemetryservice.client.IotAuthInterface;
+import com.agms.telemetryservice.dto.UserDTO;
 import com.agms.telemetryservice.service.IoTAuthService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class IoTAuthServiceImpl implements IoTAuthService {
 
     private String accessToken;
@@ -22,11 +22,7 @@ public class IoTAuthServiceImpl implements IoTAuthService {
     @Value("${iot.password}")
     private String password;
 
-    private final WebClient webClient;
-
-    public IoTAuthServiceImpl(WebClient.Builder builder, @Value("${iot.base-url}") String iotBaseUrl) {
-        this.webClient = builder.baseUrl(iotBaseUrl).build();
-    }
+    private final IotAuthInterface iotAuthInterface;
 
     @Override
     public String getAccessToken() {
@@ -43,20 +39,14 @@ public class IoTAuthServiceImpl implements IoTAuthService {
             return accessToken;
         }
 
-        Map<String, String> request = new HashMap<>();
-        request.put("refreshToken", refreshToken);
+        UserDTO requestbody = new UserDTO();
+        requestbody.setRefreshToken(refreshToken);
 
-        Map<String, Object> response = webClient.post()
-                .uri("/auth/refresh")
-                .bodyValue(request)
-                .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-            })
-                .block();
+        UserDTO user = iotAuthInterface.refresh(requestbody);
 
-        this.accessToken = (String) response.get("accessToken");
+        this.accessToken = user.getAccessToken();
 
-        Object newRefreshToken = response.get("refreshToken");
+        Object newRefreshToken = user.getRefreshToken();
         if (newRefreshToken instanceof String) {
             this.refreshToken = (String) newRefreshToken;
         }
@@ -65,19 +55,14 @@ public class IoTAuthServiceImpl implements IoTAuthService {
     }
 
     private void login() {
-        Map<String, String> request = new HashMap<>();
-        request.put("username", username);
-        request.put("password", password);
 
-        Map<String, Object> response = webClient.post()
-                .uri("/auth/login")
-                .bodyValue(request)
-                .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-            })
-                .block();
+        UserDTO requestbody = new UserDTO();
+        requestbody.setUsername(username);
+        requestbody.setPassword(password);
 
-        this.accessToken = (String) response.get("accessToken");
-        this.refreshToken = (String) response.get("refreshToken");
+        UserDTO response = iotAuthInterface.login(requestbody);
+
+        this.accessToken = response.getAccessToken();
+        this.refreshToken = response.getRefreshToken();
     }
 }

@@ -39,8 +39,8 @@ public class ZoneController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse> getZoneById(@PathVariable Long id, @RequestHeader("User-Email") String email) {
-        APIResponse response = zoneService.getZoneById(id, email);
+    public ResponseEntity<APIResponse> getZoneById(@PathVariable Long id) {
+        APIResponse response = zoneService.getZoneById(id);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

@@ -1,9 +1,8 @@
-package com.agms.telemetryservice.feign;
+package com.agms.telemetryservice.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.agms.telemetryservice.util.APIResponse;
 
@@ -11,5 +10,5 @@ import com.agms.telemetryservice.util.APIResponse;
 public interface ZoneInterface {
 
     @GetMapping
-    public ResponseEntity<APIResponse> getAllZones(@RequestHeader("User-Email") String email);
+    public ResponseEntity<APIResponse> getAllZones();
 }

@@ -1,17 +1,16 @@
-package com.agms.automationservice.dto;
+package com.agms.telemetryservice.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class RequestDTO {
-
-    private Long zoneId;
+public class ValueDTO {
     private double temperature;
+    private Unit tempUnit;
+
     private double humidity;
+    private Unit humidityUnit;
 }

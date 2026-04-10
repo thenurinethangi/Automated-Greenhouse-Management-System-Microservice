@@ -1,5 +1,7 @@
 package com.agms.telemetryservice.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +23,7 @@ public class Telemetry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String deviceId;
 
     @Column(nullable = false)
@@ -30,9 +32,13 @@ public class Telemetry {
     @Column(nullable = false)
     private double humidity;
 
-    public Telemetry(String deviceId, double temperature, double humidity) {
+    @Column(nullable = false)
+    private LocalDateTime readTime;
+
+    public Telemetry(String deviceId, double temperature, double humidity, LocalDateTime readTime) {
         this.deviceId = deviceId;
         this.temperature = temperature;
         this.humidity = humidity;
+        this.readTime = readTime;
     }
 }

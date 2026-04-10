@@ -24,7 +24,7 @@ public class Log {
     private Long id;
 
     @Column(nullable = false)
-    private String zoneId;
+    private Long zoneId;
 
     @Column(nullable = false)
     private double temperature;
@@ -38,7 +38,7 @@ public class Log {
     @Column(nullable = false)
     private Date timestamp;
 
-    public Log(String zoneId, double temperature, double humidity, String actionTaken) {
+    public Log(Long zoneId, double temperature, double humidity, String actionTaken) {
         this.zoneId = zoneId;
         this.temperature = temperature;
         this.humidity = humidity;
