@@ -11,6 +11,8 @@ public interface ZoneService {
 
     public APIResponse getZoneById(Long id);
 
+    public APIResponse getZoneByUserEmail(String email);
+
     public APIResponse updateThresholdsById(Long id, ZoneDTO zoneDTO, String email);
 
     public APIResponse deleteZoneById(Long id, String email);

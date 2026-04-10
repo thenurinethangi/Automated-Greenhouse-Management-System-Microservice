@@ -60,6 +60,16 @@ public class ZoneServiceImpl implements ZoneService {
         return new APIResponse(200, "successfully retrieved the zone", zone);
     }
 
+    public APIResponse getZoneByUserEmail(String email) {
+
+        List<Zone> zone = zoneRepository.findAllByUserEmail(email);
+        if (zone == null || zone.isEmpty()) {
+            return new APIResponse(404, "no zones found", null);
+        }
+
+        return new APIResponse(200, "successfully retrieved the zone", zone);
+    }
+
     public APIResponse updateThresholdsById(Long id, ZoneDTO zoneDTO, String email) {
 
         Zone zone = zoneRepository.findById(id).orElse(null);

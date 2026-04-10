@@ -1,6 +1,7 @@
 package com.agms.telemetryservice.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,26 +37,17 @@ public class TelemetryServiceImpl implements TelemetryService {
     @Override
     public APIResponse fetchLatest() {
 
-        // List<Map<String, Object>> allZones = zoneService.getAllZones();
+        List<Map<String, Object>> allZones = (List<Map<String, Object>>) zoneInterface.getAllZones().getBody()
+                .getData();
 
-        // for (Map<String, Object> map : allZones) {
-        // String deviceId = map.get("deviceId").toString();
-        // Map<String, String> telemetry = deviceService.getDeviceTelemetry(deviceId);
+        List<Telemetry> latestTelemetryList = new ArrayList<>();
+        for (Map<String, Object> map : allZones) {
+            String deviceId = (String) map.get("deviceId");
+            telemetryRepository.findAllByDeviceIdOrderByReadTimeDesc(deviceId).stream().findFirst()
+                    .ifPresent(latestTelemetryList::add);
+        }
 
-        // Telemetry savedTelemetry = telemetryRepository.save(new Telemetry(
-        // deviceId,
-        // Double.parseDouble(telemetry.get("temperature")),
-        // Double.parseDouble(telemetry.get("humidity"))));
-
-        // Map<String, Object> data = Map.of(
-        // "zoneId", map.get("zoneId"),
-        // "temperature", savedTelemetry.getTemperature(),
-        // "humidity", savedTelemetry.getHumidity());
-        // automationService.callAutomationServiceToApplyLogic(data);
-
-        // }
-
-        return null;
+        return new APIResponse(200, "Successfully retrieved latest telemetry!", latestTelemetryList);
     }
 
     @Override
@@ -84,7 +76,8 @@ public class TelemetryServiceImpl implements TelemetryService {
 
             Telemetry savedTelemetry = telemetryRepository.save(t);
 
-            RequestDTO requestDTO = new RequestDTO(zone.getId(), savedTelemetry.getTemperature(), savedTelemetry.getHumidity());
+            RequestDTO requestDTO = new RequestDTO(zone.getId(), savedTelemetry.getTemperature(),
+                    savedTelemetry.getHumidity());
             automationService.callAutomationServiceToApplyLogic(requestDTO);
         }
     }

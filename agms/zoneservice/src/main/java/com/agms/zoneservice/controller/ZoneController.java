@@ -44,6 +44,12 @@ public class ZoneController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
+    @GetMapping("/user/{email}")
+    public ResponseEntity<APIResponse> getZoneByUserEmail(@PathVariable String email) {
+        APIResponse response = zoneService.getZoneByUserEmail(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<APIResponse> updateThresholdsById(@PathVariable Long id, @RequestBody ZoneDTO zoneDTO,
             @RequestHeader("User-Email") String email) {
